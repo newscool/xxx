@@ -7,11 +7,17 @@ import Login from './routes/login';
 import CreateAccount from './routes/create-account';
 import { useEffect, useState } from 'react';
 import LoadingScreen from './components/loading-screen';
+import { auth } from './firebase';
+import ProtectedRoute from './components/protected-route';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: '',
@@ -28,7 +34,7 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: '/create-accout',
+    path: '/create-account',
     element: <CreateAccount />,
   },
 ]);
@@ -37,6 +43,7 @@ function App() {
   const [isLoading, setLoading] = useState(true);
 
   const init = async () => {
+    await auth.authStateReady();
     setLoading(false);
   };
 
