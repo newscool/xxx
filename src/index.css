@@ -1,3 +1,5 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,4 +8,20 @@ html,
 body,
 #root {
   height: 100vh;
+}
+
+html {
+  font-family: 'Pretendard';
+}
+
+@layer components {
+  .input {
+    @apply h-11 p-4 border border-zinc-300 rounded-full bg-zinc-50;
+  }
+  .button {
+    @apply h-11 bg-zinc-800 rounded-full flex justify-center items-center text-white font-semibold cursor-pointer;
+  }
+  .sns-login-button {
+    @apply flex h-11 items-center justify-center gap-2 px-4 rounded-full shadow-md cursor-pointer ring-1 ring-zinc-300 hover:bg-zinc-50 text-sm;
+  }
 }
