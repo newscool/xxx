@@ -4,6 +4,9 @@ import Logo from '../components/logo';
 import { FirebaseError } from 'firebase/app';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
+import GithubButton from '../components/github-button';
+import GoogleButton from '../components/google-button';
+import KakaoButton from '../components/kakao-button';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -43,36 +46,31 @@ export default function Login() {
 
   return (
     <div className="container max-w-lg px-6">
-      <h1 className="flex justify-center mb-5">
-        <Logo size={80} />
+      <h1 className="flex flex-col items-center justify-center mb-7">
+        <Logo size={90} />
+        <p className="text-xl font-medium">로그인이 필요합니다.</p>
       </h1>
       <form onSubmit={onSubmit} className="flex flex-col gap-2 text-sm">
         {[
-          ['email', 'email', 'Email'],
-          ['password', 'password', 'Password'],
+          ['email', 'email', '이메일'],
+          ['password', 'password', '비밀번호'],
         ].map(([type, name, placeholder]) => (
-          <input
-            onChange={onChange}
-            type={type}
-            name={name}
-            placeholder={placeholder}
-            required
-            className="px-4 py-2 border rounded-full"
-          />
+          <input onChange={onChange} type={type} name={name} placeholder={placeholder} required className="input" />
         ))}
-        <input
-          type="submit"
-          value={isLoading ? 'Loading...' : 'Login'}
-          className="p-3 mt-3 text-white rounded-full cursor-pointer bg-zinc-800 hover:bg-zinc-900"
-        />
+        <input type="submit" value={isLoading ? '로딩중...' : '로그인'} className="button" />
       </form>
       {error !== '' ? <div className="mt-3 text-xs text-rose-500">{error}</div> : null}
-      <div className="flex justify-center gap-3 mt-5 text-sm">
+      <div className="flex justify-center gap-3 mt-10 text-base">
         <p className="text-zinc-400">아직 계정이 없으신가요?</p>
-        <Link to="/create-account" className="font-semibold text-blue-400 hover:text-blue-600">
+        <Link to="/create-account" className="font-medium text-green-500 hover:text-green-600">
           가입하기
           <i className="ml-1 las la-arrow-right"></i>
         </Link>
+      </div>
+      <div className="flex flex-col gap-3 mt-10">
+        <GithubButton />
+        <GoogleButton />
+        <KakaoButton />
       </div>
     </div>
   );
