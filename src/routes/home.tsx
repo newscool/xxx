@@ -1,14 +1,10 @@
-import { auth } from '../firebase';
+import PostWriteForm from '../components/post-write-form';
 
 export default function Home() {
-  const logOut = () => {
-    auth.signOut();
-  };
   return (
-    <>
-      <button onClick={logOut} className="px-4 py-1 rounded-full ring-1 ring-zinc-500">
-        Logout
-      </button>
-    </>
+    <div className="py-8 grow">
+      <PostWriteForm />
+      <div className="mt-10">:LIST</div>
+    </div>
   );
 }

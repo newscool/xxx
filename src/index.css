@@ -19,9 +19,23 @@ html {
     @apply h-11 p-4 border border-zinc-300 rounded-full bg-zinc-50;
   }
   .button {
-    @apply h-11 bg-zinc-800 rounded-full flex justify-center items-center text-white font-semibold cursor-pointer;
+    @apply h-11 bg-zinc-800 rounded-full flex justify-center items-center text-white font-semibold cursor-pointer transition-all;
   }
   .sns-login-button {
     @apply flex h-11 items-center justify-center gap-2 px-4 rounded-full shadow-md cursor-pointer ring-1 ring-zinc-300 hover:bg-zinc-50 text-sm;
   }
+  .left-menu > * {
+    @apply flex items-center gap-4 cursor-pointer;
+  }
+  .left-menu > * > span {
+    @apply text-xl font-medium;
+  }
 }
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+  <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
+</svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+</svg>
