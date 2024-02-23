@@ -2,6 +2,7 @@ import { addDoc, collection, updateDoc } from 'firebase/firestore';
 import { useRef, useState } from 'react';
 import { auth, db, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import Compressor from 'compressorjs';
 
 export default function PostWriteForm() {
   const refTextarea = useRef<HTMLTextAreaElement>(null);
@@ -40,11 +41,19 @@ export default function PostWriteForm() {
       });
 
       if (file) {
-        const locationRef = ref(storage, `posts/${user.uid}-${user.displayName}/${doc.id}`);
-        const result = await uploadBytes(locationRef, file);
-        const url = await getDownloadURL(result.ref);
-        await updateDoc(doc, {
-          photo: url,
+        new Compressor(file, {
+          quality: 0.8,
+          maxWidth: 1000,
+          async success(image) {
+            if (image instanceof Blob) {
+              const locationRef = ref(storage, `posts/${user.uid}/${doc.id}`);
+              const result = await uploadBytes(locationRef, image);
+              const url = await getDownloadURL(result.ref);
+              await updateDoc(doc, {
+                photo: url,
+              });
+            }
+          },
         });
       }
       setPost('');
@@ -69,7 +78,9 @@ export default function PostWriteForm() {
         className="min-h-[60px] text-xl font-medium bg-transparent border-0 outline-none resize-none"
         placeholder="당신 앞에 어떤 햄버거가 놓여있나요?"
         required
-      ></textarea>
+      >
+        {post}
+      </textarea>
       <div className="flex items-center justify-between">
         <label
           htmlFor="file"

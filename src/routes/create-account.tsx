@@ -6,6 +6,7 @@ import Logo from '../components/logo';
 import { FirebaseError } from 'firebase/app';
 import GithubButton from '../components/github-button';
 import GoogleButton from '../components/google-button';
+import KakaoButton from '../components/kakao-button';
 
 export default function CreateAccount() {
   const navigate = useNavigate();
@@ -73,6 +74,7 @@ export default function CreateAccount() {
       <div className="flex flex-col gap-3 mt-10">
         <GithubButton />
         <GoogleButton />
+        <KakaoButton />
       </div>
     </div>
   );
