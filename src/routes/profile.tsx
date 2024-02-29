@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { auth, db, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { updateProfile } from 'firebase/auth';
-import { collection, getDocs, limit, orderBy, query, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, limit, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { IPost } from '../components/timeline';
 import Post from '../components/post';
 
@@ -21,6 +21,14 @@ export default function Profile() {
       const avatarUrl = await getDownloadURL(result.ref);
       setAvatar(avatarUrl);
       await updateProfile(user, { photoURL: avatarUrl });
+
+      const userRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        await updateDoc(doc(db, 'users', user.uid), {
+          photoUrl: user.photoURL,
+        });
+      }
     }
   };
   const enableEditMode = () => {
@@ -37,6 +45,8 @@ export default function Profile() {
     if (user) {
       try {
         await updateProfile(user, { displayName: newName });
+        const userRef = doc(db, 'users', user.uid);
+        await updateDoc(userRef, { name: newName });
         alert('이름이 변경되었습니다.');
         window.location.reload();
       } catch (e) {
@@ -73,10 +83,10 @@ export default function Profile() {
     <div className="flex flex-col items-center justify-start w-full py-10 max-w-[700px] mx-auto">
       <label
         htmlFor="avatar"
-        className="cursor-pointer rounded-full w-[120px] h-[120px] overflow-hidden bg-zinc-50 flex justify-center items-center"
+        className="cursor-pointer rounded-full w-[120px] h-[120px] overflow-hidden bg-zinc-50 flex justify-center "
       >
         {avatar ? (
-          <img src={avatar} className="block object-cover aspect-square" />
+          <img src={avatar} className="block object-cover w-full aspect-square" />
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"

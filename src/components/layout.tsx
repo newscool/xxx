@@ -4,7 +4,7 @@ import Logo from './logo';
 
 export default function Layout() {
   const navigate = useNavigate();
-  const username = auth.currentUser?.displayName;
+  const user = auth.currentUser;
 
   const onLogOut = async () => {
     const ok = confirm('로그아웃을 하시겠어요?');
@@ -14,18 +14,18 @@ export default function Layout() {
     }
   };
   return (
-    <div className="container flex h-full mx-auto gap-[60px]">
+    <div className="container flex h-full mx-auto gap-[100px] p-5 pb-10 sm:p-0">
       {/* header */}
-      <header className="basis-[15%]">
-        <div className="fixed flex flex-col h-full gap-5">
+      <header className="sm:basis-[30%] fixed sm:relative bottom-0 left-0 w-full border-t border-zinc-100">
+        <div className="relative bottom-0 flex items-center justify-around w-full gap-5 p-2 bg-white sm:fixed sm:w-auto sm:h-full sm:flex-col sm:pt-7 sm:items-start sm:p-0">
           {/* logo */}
-          <Logo size={60} />
+          <Logo size={80} />
           {[
             ['홈', '/'],
             ['프로필', '/profile'],
             ['로그아웃', '/logout'],
           ].map(([title, path]) => (
-            <div className="left-menu">
+            <div key={path} className="left-menu">
               {title === '홈' ? (
                 <Link to={path}>
                   <svg
@@ -94,7 +94,15 @@ export default function Layout() {
               )}
             </div>
           ))}
-          <div className="mt-auto">{username}</div>
+          <div className="items-center hidden gap-2 pb-10 mt-auto sm:flex">
+            <div className="w-[50px] h-[50px] rounded-full overflow-hidden">
+              {user?.photoURL ? <img src={user?.photoURL} className="block object-cover w-full h-full" /> : <div></div>}
+            </div>
+            <div>
+              <div className="mb-1 font-semibold leading-none">{user?.displayName}</div>
+              <div className="text-sm leading-none text-sky-900/40">{user?.email}</div>
+            </div>
+          </div>
         </div>
       </header>
 

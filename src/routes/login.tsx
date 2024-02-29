@@ -55,7 +55,15 @@ export default function Login() {
           ['email', 'email', '이메일'],
           ['password', 'password', '비밀번호'],
         ].map(([type, name, placeholder]) => (
-          <input onChange={onChange} type={type} name={name} placeholder={placeholder} required className="input" />
+          <input
+            key={type}
+            onChange={onChange}
+            type={type}
+            name={name}
+            placeholder={placeholder}
+            required
+            className="input"
+          />
         ))}
         <input type="submit" value={isLoading ? '로딩중...' : '로그인'} className="button" />
       </form>

@@ -1,13 +1,17 @@
 import { OAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import { checkUserProfile } from '../utils/checkUserProfile';
 
 export default function KakaoButton() {
   const navigate = useNavigate();
+
   const onClick = async () => {
     try {
       const provider = new OAuthProvider('oidc.kakao');
-      await signInWithPopup(auth, provider);
+      const user = await signInWithPopup(auth, provider);
+      await checkUserProfile(user);
+
       navigate('/');
     } catch (e) {
       console.error(e);

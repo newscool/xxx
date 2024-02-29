@@ -7,7 +7,7 @@
 html,
 body,
 #root {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 html {
@@ -15,6 +15,9 @@ html {
 }
 
 @layer components {
+  .logo {
+    @apply w-[50px] sm:w-[80px] mt-1 sm:mt-0;
+  }
   .input {
     @apply h-11 p-4 border border-zinc-300 rounded-full bg-zinc-50;
   }
@@ -25,9 +28,12 @@ html {
     @apply flex h-11 items-center justify-center gap-2 px-4 rounded-full shadow-md cursor-pointer ring-1 ring-zinc-300 hover:bg-zinc-50 text-sm;
   }
   .left-menu > * {
-    @apply flex items-center gap-4 cursor-pointer;
+    @apply flex flex-col sm:flex-row items-center sm:gap-4 cursor-pointer w-[50px] sm:w-auto;
+  }
+  .left-menu > * > svg {
+    @apply w-[22px] sm:w-[30px];
   }
   .left-menu > * > span {
-    @apply text-xl font-medium;
+    @apply sm:text-xl font-medium text-sm leading-none sm:leading-3;
   }
 }
